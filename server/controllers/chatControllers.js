@@ -360,4 +360,25 @@ const getMessages= async(req,res,next)=>{
   }
 }
 
-export {newGroupChat, getMyChats, getMyGroups, addMembers, removeMember, leaveGroup, sendAttachments, getChatDetails, renameGroup, deleteChat, getMessages}
+const getCommunities= async(req,res,next)=>{
+  try {
+    const chats= await Chat.find({
+      groupChat: true
+    }).populate("creator","name avatar isAdmin")
+    const filterChats= chats.filter(({creator})=> creator.isAdmin === true)
+    const communities= filterChats.map(({_id,name,members,creator})=>{
+      return{
+        _id, name, creator,
+        memberCount: members.length
+      }
+    })
+    return res.status(201).json({
+      success: true,
+      communities,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export {newGroupChat, getMyChats, getMyGroups, addMembers, removeMember, leaveGroup, sendAttachments, getChatDetails, renameGroup, deleteChat, getMessages, getCommunities}

@@ -205,4 +205,38 @@ const getMyFriends= async(req,res,next)=>{
   }
 }
 
-export {register,login,getMyProfile,logout, searchUser,sendFriendRequest,acceptFriendRequest,getMyNotifications,getMyFriends}
+const updateMyProfile= async(req,res,next)=>{
+  try {
+    const user= await User.findById(req.userId)
+    const {newName,newUsername,newPassword,newBio}= req.body
+    
+    const newFile= req.file
+    let newAvatar={}
+    if(newFile){
+      const result= await uploadFilesToCloudinary([newFile])
+      newAvatar={
+        public_id: result[0].public_id,
+        url: result[0].url
+      }
+    }
+    const otherUser= await User.findOne({username: newUsername})
+    if(otherUser){
+      return next(new ErrorHandler('This username already exists', 400))
+    }
+    if(newName)  user.name= newName
+    if(newUsername)  user.username= newUsername
+    if(newBio)  user.bio= newBio
+    if(newPassword)  user.password= newPassword
+    if(newAvatar.public_id)  user.avatar= newAvatar
+    await user.save()
+    
+    res.status(200).json({
+      success: true,
+      user
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export {register,login,getMyProfile,logout, searchUser,sendFriendRequest,acceptFriendRequest,getMyNotifications,getMyFriends,updateMyProfile}

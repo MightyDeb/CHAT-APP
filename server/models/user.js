@@ -19,6 +19,10 @@ const schema= new Schema({
     type: String,
     default: 'Hi Everyone!'
   },
+  isAdmin:{
+    type: Boolean,
+    default: false 
+  },
   avatar:{
     public_id: {
       type: String,
