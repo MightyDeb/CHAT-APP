@@ -1,5 +1,5 @@
 import { ALERT, NEW_MESSAGE, NEW_MESSAGE_ALERT, REFETCH_CHATS } from "../constants/events.js";
-import { deleteFilesFromCloudinary, emitEvent, uploadFilesToCloudinary } from "../utils/features.js";
+import { emitEvent, uploadFilesToCloudinary } from "../utils/features.js";
 import { ErrorHandler } from "../utils/utility.js";
 import { Chat } from "../models/chat.js";
 import { User } from "../models/user.js";
@@ -316,7 +316,6 @@ const deleteChat= async(req,res,next)=>{
       )
     )
     await Promise.all([
-      deleteFilesFromCloudinary(public_ids),
       chat.deleteOne(),
       Message.deleteMany({ chatId: chatId })
     ])
