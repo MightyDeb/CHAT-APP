@@ -5,6 +5,7 @@ import { ErrorHandler } from '../utils/utility.js'
 import { Chat } from '../models/chat.js'
 import {Request} from '../models/request.js'
 import { NEW_REQUEST, REFETCH_CHATS } from '../constants/events.js'
+
 //create a new user, save it to database and save token in cookie
 const register= async(req,res,next)=>{
   try {
@@ -76,6 +77,22 @@ const logout= (req,res,next)=>{
     success: true,
     message: 'Logged out successfully'
   })
+}
+
+const getUserProfile= async(req,res,next)=>{
+  try {
+    const {userId}= req.params
+    if(!userId){
+      return next(new ErrorHandler("No User found", 400))
+    }
+    const user= await User.findById(userId)
+    res.status(200).json({
+      success: true,
+      user
+    })
+  } catch (error) {
+    next(error)
+  } 
 }
 
 const searchUser= async(req,res,next)=>{
@@ -239,4 +256,4 @@ const updateMyProfile= async(req,res,next)=>{
   }
 }
 
-export {register,login,getMyProfile,logout, searchUser,sendFriendRequest,acceptFriendRequest,getMyNotifications,getMyFriends,updateMyProfile}
+export {register,login,getMyProfile,logout, searchUser,sendFriendRequest,acceptFriendRequest,getMyNotifications,getMyFriends,updateMyProfile,getUserProfile}

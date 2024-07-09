@@ -55,8 +55,5 @@ const uploadFilesToCloudinary= async (files=[])=>{
   }
 }
 
-const deleteFilesFromCloudinary= async(public_ids)=>{
-  //delete files from cloudinary
-}
 
-export {connectDB, sendToken, emitEvent, uploadFilesToCloudinary,deleteFilesFromCloudinary}
+export {connectDB, sendToken, emitEvent, uploadFilesToCloudinary}

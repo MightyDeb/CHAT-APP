@@ -4,6 +4,7 @@ import { ErrorHandler } from "../utils/utility.js";
 import { Chat } from "../models/chat.js";
 import { User } from "../models/user.js";
 import {Message} from '../models/message.js'
+
 const newGroupChat= async(req,res,next)=>{
   try {
     const {name,members}= req.body;

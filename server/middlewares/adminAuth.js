@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 import { ErrorHandler } from "../utils/utility.js"
 
-
 export const adminOnly=(req,res,next)=>{
   try {
     const token= req.cookies["Admin_Token"]

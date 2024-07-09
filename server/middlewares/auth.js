@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken"
 import { ErrorHandler } from "../utils/utility.js"
 import { User } from "../models/user.js"
 
-
 export const isAuthenticated=(req,res,next)=>{
   try {
     const token= req.cookies["token"]

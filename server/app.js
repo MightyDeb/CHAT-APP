@@ -1,5 +1,4 @@
 import express from "express";
-
 import { connectDB } from "./utils/features.js";
 import dotenv from "dotenv";
 import { errorMiddleware } from "./middlewares/error.js";
@@ -10,15 +9,12 @@ import { v4 as uuid } from "uuid";
 import cors from 'cors'
 import {v2 as cloudinary} from 'cloudinary'
 import { NEW_MESSAGE, NEW_MESSAGE_ALERT, START_TYPING, STOP_TYPING } from "./constants/events.js";
-import { v4 } from "uuid";
 import { getSockets } from "./lib/helper.js";
 import { Message } from "./models/message.js";
 import { socketAuthenticator } from "./middlewares/auth.js";
 
 import userRoutes from './routes/user.js'
 import chatRoutes from './routes/chat.js'
-
-
 
 dotenv.config({
   path: './.env'
@@ -114,6 +110,7 @@ io.on("connection", (socket)=>{
     userSocketIDs.delete(user._id.toString())
   })
 })
+
 //errorMiddleware always at last
 app.use(errorMiddleware)
 
